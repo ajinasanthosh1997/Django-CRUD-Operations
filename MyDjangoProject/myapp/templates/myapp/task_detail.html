@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Detail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            margin-top: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Style the "Completed" status */
+        .completed-yes {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .completed-no {
+            color: #e53935;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Detail</h1>
+    <h2>{{ task.title }}</h2>
+    <p>{{ task.description }}</p>
+    <p>Completed: {% if task.completed %}<span class="completed-yes">Yes</span>{% else %}<span class="completed-no">No</span>{% endif %}</p>
+</body>
+</html>

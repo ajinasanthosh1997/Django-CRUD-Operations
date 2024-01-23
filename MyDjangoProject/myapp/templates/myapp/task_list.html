@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        h1 {
+            color: #007BFF;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .edit-btn, .complete-btn, .delete-btn {
+            padding: 5px 10px;
+            margin-left: 5px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #2196F3; /* Blue for Edit button */
+        }
+
+        .complete-btn {
+            background-color: #4CAF50; /* Green for Complete button */
+        }
+
+        .delete-btn {
+            background-color: #F44336; /* Red for Delete button */
+        }
+
+        a.create-task-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #28a745;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        a.create-task-btn:hover {
+            background-color: #218838;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .step-links a {
+            margin-right: 10px;
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-links a:hover {
+            color: #0056b3;
+            background-color: #f8f9fa;
+        }
+
+        .current-page {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <a href="{% url 'task_detail' task.id %}">{{ task.title }}</a>
+                <div>
+                    <a class="edit-btn" href="{% url 'task_update' task.id %}">Edit</a>
+                    <a class="complete-btn" href="{% url 'task_complete' task.id %}">Complete</a>
+                    <a class="delete-btn" href="{% url 'task_delete' task.id %}">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'task_create' %}" class="create-task-btn">Create New Task</a>
+    <div class="pagination">
+        <span class="step-links">
+            {% if tasks.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ tasks.previous_page_number }}" class="pagination-link">previous</a>
+            {% endif %}
+        
+            <span class="current-page">
+                Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}.
+            </span>
+            
+            {% if tasks.has_next %}
+                <a href="?page={{ tasks.next_page_number }}" class="pagination-link">next</a>
+                <a href="?page={{ tasks.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>
